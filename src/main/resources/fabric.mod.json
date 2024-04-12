@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "breadclient",
+	"version": "${version}",
+	"name": "breadclient",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"bread"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/breadclient/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.bread.BreadClient"
+		]
+	},
+	"mixins": [
+		"breadclient.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.0",
+		"minecraft": "~1.20.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
