@@ -1,4 +1,5 @@
 {
-  "category.bread.breadclient": "Bread Client",
-  "key.bread.easyBedrockBreaker": "easyBedrockBreaker activate"
+  "breadclient.gui.button.tab.generic": "Generic",
+  "breadclient.gui.button.tab.keybind": "Keybinds",
+  "breadclient.gui.button.tab.feature": "Features"
 }

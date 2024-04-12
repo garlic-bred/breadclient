@@ -23,6 +23,9 @@ repositories {
 			includeGroup "curse.maven"
 		}
 	}
+	maven {
+		url 'https://maven.hendrixshen.top'
+	}
 }
 
 dependencies {
@@ -34,9 +37,9 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// masa
+	// Other mods
 	modImplementation "curse.maven:malilib-303119:${project.malilib_version}"
-	modImplementation "curse.maven:tweakeroo-297344:${project.tweakeroo_version}"
+	modImplementation "curse.maven:magiclib-576459:${project.magiclib_version}"
 	
 }
 
