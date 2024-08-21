@@ -13,7 +13,8 @@ Delays block breaking and placing packets from being sent to the server. Set a k
 Previously called easyBedrockBreaker
 
 ### book savestate
-See https://github.com/garlic-bred/book-savestate for information
+See https://github.com/garlic-bred/book-savestate for information\
+The features of that mod are also included in breadclient, so you don't need to install both
 
 # Other changes
 - Mods that use malilib will have no max limit to how high you can configure their settings.
