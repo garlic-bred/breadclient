@@ -1,6 +1,6 @@
 package com.bread.mixin;
 
-import com.bread.feature.EasyBedrockBreaker;
+import com.bread.feature.PacketDelay;
 import net.minecraft.client.network.ClientCommonNetworkHandler;
 import net.minecraft.network.packet.Packet;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,8 +15,8 @@ public class ClientCommonNetworkHandlerMixin {
 
     @Inject(method = "sendPacket", at = @At("HEAD"), cancellable = true)
     private void delayPackets(Packet<?> packet, CallbackInfo ci) {
-        if (EasyBedrockBreaker.isDelayingPackets() && Arrays.stream(EasyBedrockBreaker.blockedPackets).anyMatch(c -> c.isInstance(packet))) {
-            EasyBedrockBreaker.delayPacket(packet);
+        if (PacketDelay.isDelayingPackets() && Arrays.stream(PacketDelay.blockedPackets).anyMatch(c -> c.isInstance(packet))) {
+            PacketDelay.delayPacket(packet);
             ci.cancel();
         }
     }

@@ -1,6 +1,6 @@
 package com.bread.feature;
 
-import com.bread.config.BreadConfig;
+import com.bread.BreadConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -13,16 +13,18 @@ import net.minecraft.network.packet.c2s.play.*;
 
 import java.util.ArrayList;
 
-public class EasyBedrockBreaker {
+public class PacketDelay {
+
+    private static KeyBinding activateKey;
 
     public static void init() {
-//        activateKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.bread.easyBedrockBreaker", InputUtil.Type.KEYSYM, InputUtil.UNKNOWN_KEY.getCode(), "category.bread.breadclient"));
+        activateKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.bread.packetDelay", InputUtil.Type.KEYSYM, InputUtil.UNKNOWN_KEY.getCode(), "category.bread.breadclient"));
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            if (!BreadConfig.easyBedrockBreakerActivate.getKeybind().isPressed()) releasePackets();
+            if (!activateKey.isPressed()) releasePackets();
         });
 
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-            if (isDelayingPackets() && BreadConfig.easyBedrockBreaker)
+            if (isDelayingPackets() && BreadConfig.packetDelay)
                 MinecraftClient.getInstance().textRenderer.draw("delaying packets", 4, drawContext.getScaledWindowHeight() - 4 - MinecraftClient.getInstance().textRenderer.fontHeight, 0xffffffff, true, drawContext.getMatrices().peek().getPositionMatrix(), drawContext.getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0x00000000, 1);
         });
     }
@@ -38,7 +40,7 @@ public class EasyBedrockBreaker {
     };
 
     public static boolean isDelayingPackets() {
-        return BreadConfig.easyBedrockBreakerActivate.getKeybind().isPressed();
+        return activateKey.isPressed();
     }
 
     public static void delayPacket(Packet<?> p) {

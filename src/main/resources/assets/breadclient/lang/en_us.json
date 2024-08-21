@@ -1,5 +1,4 @@
 {
-  "breadclient.gui.button.tab.generic": "Generic",
-  "breadclient.gui.button.tab.keybind": "Keybinds",
-  "breadclient.gui.button.tab.feature": "Features"
+  "category.bread.breadclient": "Bread Client",
+  "key.bread.packetDelay": "Activate Packet Delay"
 }

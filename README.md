@@ -8,8 +8,13 @@ Use the `/breadclient` command to enable or disable features. Changes will not p
 ### clickBlockMining
 No delay between breaking blocks. Inspired by nessie's usefulmod.
 
-### easyBedrockBreaker
-Delays block breaking and placing packets from being sent to the server. Set a keybind for it in the vanilla controls menu.
+### packetDelay
+Delays block breaking and placing packets from being sent to the server. Set a keybind for it in the vanilla controls menu.\
+Previously called easyBedrockBreaker
+
+### book savestate
+See https://github.com/garlic-bred/book-savestate for information
 
 # Other changes
 - Mods that use malilib will have no max limit to how high you can configure their settings.
+- Allows you to place any item in your armor slots

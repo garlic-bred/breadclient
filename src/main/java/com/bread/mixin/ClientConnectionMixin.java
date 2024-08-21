@@ -1,6 +1,6 @@
 package com.bread.mixin;
 
-import com.bread.feature.EasyBedrockBreaker;
+import com.bread.feature.PacketDelay;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ public class ClientConnectionMixin {
 
     @Inject(method = "disconnect", at = @At("HEAD"))
     private void clearPackets(Text disconnectReason, CallbackInfo ci) {
-        EasyBedrockBreaker.clearPackets();
+        PacketDelay.clearPackets();
     }
 
 }
