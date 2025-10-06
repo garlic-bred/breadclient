@@ -8,8 +8,7 @@
 		"bread"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/garlic-bred/breadclient"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/breadclient/icon.png",
@@ -23,9 +22,9 @@
 		"breadclient.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.13",
-		"minecraft": ">=1.21.5",
-		"java": ">=17",
+		"fabricloader": ">=0.17.2",
+		"minecraft": ">=1.21.9",
+		"java": ">=21",
 		"fabric-api": "*"
 	},
 	"suggests": {

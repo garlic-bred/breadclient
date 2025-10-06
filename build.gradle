@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -43,7 +43,7 @@ dependencies {
 //	modImplementation "com.github.sakura-ryoko:tweakeroo:${project.tweakeroo_sr}"
 //	modImplementation "com.github.sakura-ryoko:minihud:${project.minihud_sr}"
 //	modImplementation "com.github.sakura-ryoko:litematica:${project.litematica_sr}"
-	modImplementation "com.github.sakura-ryoko:malilib:${project.malilib_sr}"
+//	modImplementation "com.github.sakura-ryoko:malilib:${project.malilib_sr}"
 	
 }
 
