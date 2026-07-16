@@ -1,4 +1,4 @@
 {
-  "category.bread.breadclient": "Bread Client",
-  "key.bread.packetDelay": "Activate Packet Delay"
+  "key.category.breadclient.keys": "Bread Client",
+  "key.breadclient.packetDelay": "Activate Packet Delay"
 }

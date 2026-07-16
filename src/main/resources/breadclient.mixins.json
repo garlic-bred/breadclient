@@ -5,14 +5,12 @@
   "mixins": [
     "ArmorSlotMixin",
     "ClientConnectionMixin",
-    "ClientPlayerInteractionManagerMixin",
-    "malilib.ConfigDoubleMixin"
+    "ClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "ClientCommonNetworkHandlerMixin",
-    "HandledScreenMixin"
+    "ClientCommonNetworkHandlerMixin"
   ]
 }

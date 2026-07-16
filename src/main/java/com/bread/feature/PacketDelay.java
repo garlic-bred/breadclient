@@ -1,46 +1,64 @@
 package com.bread.feature;
 
-import com.bread.BreadConfig;
+import com.bread.BreadClient;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.c2s.play.*;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
+import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 
 public class PacketDelay {
 
-    private static KeyBinding activateKey;
+    private static KeyMapping.Category category;
+    private static KeyMapping activateKey;
 
     public static void init() {
-        activateKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.bread.packetDelay", InputUtil.Type.KEYSYM, InputUtil.UNKNOWN_KEY.getCode(), "category.bread.breadclient"));
+        category = KeyMapping.Category.register(
+                Identifier.fromNamespaceAndPath(BreadClient.MOD_ID, "keys")
+        );
+        activateKey = KeyMappingHelper.registerKeyMapping(
+                new KeyMapping("key.breadclient.packetDelay", InputConstants.Type.KEYSYM, InputConstants.UNKNOWN.getValue(), category)
+        );
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            if (!activateKey.isPressed()) releasePackets();
+            if (!activateKey.isDown()) releasePackets();
         });
 
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-            if (isDelayingPackets() && BreadConfig.packetDelay)
-                MinecraftClient.getInstance().textRenderer.draw("delaying packets", 4, drawContext.getScaledWindowHeight() - 4 - MinecraftClient.getInstance().textRenderer.fontHeight, 0xffffffff, true, drawContext.getMatrices().peek().getPositionMatrix(), drawContext.getVertexConsumers(), TextRenderer.TextLayerType.NORMAL, 0x00000000, 1);
+        HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Identifier.fromNamespaceAndPath(BreadClient.MOD_ID, "renderer"), (graphics, tickCounter) -> {
+            if (isDelayingPackets())
+                graphics.text(
+                        Minecraft.getInstance().font,
+                        "delaying packets",
+                        4,
+                        Minecraft.getInstance().getWindow().getGuiScaledHeight() - 4 - Minecraft.getInstance().font.lineHeight,
+                        0xFFFFFFFF,
+                        true
+                );
         });
     }
 
     private static ArrayList<Packet<?>> delayedPackets = new ArrayList<>();
 
     public static final Class[] blockedPackets = {
-            PlayerActionC2SPacket.class,
-            PlayerInputC2SPacket.class,
-            PlayerInteractBlockC2SPacket.class,
-            PlayerInteractItemC2SPacket.class,
-            UpdateSelectedSlotC2SPacket.class
+            ServerboundPlayerActionPacket.class,
+            ServerboundPlayerInputPacket.class,
+            ServerboundUseItemOnPacket.class,
+            ServerboundUseItemPacket.class,
+            ServerboundSetCarriedItemPacket.class
     };
 
     public static boolean isDelayingPackets() {
-        return activateKey.isPressed();
+        return activateKey.isDown();
     }
 
     public static void delayPacket(Packet<?> p) {
@@ -53,7 +71,7 @@ public class PacketDelay {
 
     private static void releasePackets() {
         for (Packet<?> packet : delayedPackets) {
-            MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
+            Minecraft.getInstance().getConnection().send(packet);
         }
         delayedPackets.clear();
     }
